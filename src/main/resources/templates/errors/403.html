@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+
+    .test{
+      margin-left: -15px;
+      margin-right: -15px;
+      height:10%;
+    }
+
+    .opisArtykulu{
+      margin-top: -15px;
+      margin-bottom: 15px;
+    }
+
+    .zdjecieArtykulu{
+      margin-top: -15px;
+      margin-bottom: 0px;
+    }
+
+
+	.img-circle {
+    		border-radius: 10%;
+        min-width: 100px;
+        max-width: 200px;
+        min-height: 100px;
+        max-height: 200px;
+	}
+
+	.tloLidera {
+    		background-color: green;
+	}
+
+	
+  </style>
+</head>
+<body>
+
+<div th:replace="/logo :: div">
+</div>
+
+	<!-- USER WITH SIGN IN WITH EMPLOYEE ROLE -->
+	<div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+		<div th:replace="/role/employee :: div">
+		</div>
+	</div>
+
+	<!-- USER WITH SIGN IN WITH ADMIN ROLE -->
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+		<div th:replace="/role/admin :: div">
+		</div>
+	</div>
+
+	<!-- USER WITH SIGN IN WITH USER ROLE -->
+	<div sec:authorize="hasRole('ROLE_USER')">
+		<div th:replace="/role/user :: div">
+		</div>
+	</div>
+
+	<!-- USER WITH NO AUTHENTICATION -->
+	<div sec:authorize="isAnonymous()">
+		<div th:replace="/role/noAuthorize :: div">
+		</div>
+	</div>
+
+
+<div class="container"> <!-- oznacza ze wszystko bedzie na srodku -->  
+ 
+	<div class="row">
+  
+	  <div class="col-lg-3 col-sm-3"> 
+	  </div>
+	  
+	  <div class="col-lg-6 col-sm-6"> <!-- col-lg-4 lg=large screen i bedzie wyswietlane tylko dla tych wiekszych ekranów col-sm-6 sm = small screen i bedize wyswietlany tylko dla tych mniejszych ekranów-->  
+	      <div class="row">
+			  <h2>Brak uprawnien</h2>
+	      </div>
+		</div>
+
+      <div class="col-lg-3 col-sm-3"> 
+	  </div>
+
+	</div>
+    
+</div>
+
+
+<br></br>
+<br></br>
+<br></br>
+
+<footer class="container-fluid text-center">
+  <p>Lukasz Narbut Copyright</p>  
+</footer>
+
+</body>
+</html>

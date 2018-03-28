@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"></link>
+  <link rel="stylesheet" th:href="@{/css/colorSelectRow.css}"></link>
+  <link rel="stylesheet" href="C:\Users\Grzegorz\Desktop\Proba2\src\main\resources\templates\static\background.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/select.js}"></script>
+  <script type="text/javascript" th:src="@{/js/ustawieniaStrony.js}"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+
+    .test{
+      margin-left: -15px;
+      margin-right: -15px;
+      height:10%;
+    }
+
+    .opisArtykulu{
+      margin-top: -15px;
+      margin-bottom: 15px;
+    }
+
+    .zdjecieArtykulu{
+      margin-top: -15px;
+      margin-bottom: 0px;
+    }
+
+
+	.img-circle {
+    		border-radius: 10%;
+        min-width: 100px;
+        max-width: 200px;
+        min-height: 100px;
+        max-height: 200px;
+	}
+	
+	.linkDoArtykulu{
+	  color: black;
+	}
+	.linkDoArtykulu:focus {
+	  text-decoration: none;
+	}
+	.linkDoArtykulu:hover{
+	  color: black;
+	  text-decoration: none;
+	}
+	
+	.img-responsivee {
+    width:  100%;
+    height: 250px;
+	}
+
+	
+  </style>
+</head>
+<body class="full">
+
+<div class="container text-center" >
+    <div class="row" >
+
+        <div th:replace="/logo :: div">
+		</div>
+
+        <div th:replace="/logoName :: div">
+		</div>
+
+    </div>
+</div>
+
+
+
+<div class="container" style="background-color: #ecf49f; border-color: #ecf49f;"> 
+
+  <div class="row">
+
+	<!-- USER WITH SIGN IN WITH EMPLOYEE ROLE -->
+	<div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+		<div th:replace="/role/employee :: div">
+		</div>
+	</div>
+
+	<!-- USER WITH SIGN IN WITH ADMIN ROLE -->
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+		<div th:replace="/role/admin :: div">
+		</div>
+	</div>
+
+	<!-- USER WITH SIGN IN WITH USER ROLE -->
+	<div sec:authorize="hasRole('ROLE_USER')">
+		<div th:replace="/role/user :: div">
+		</div>
+	</div>
+
+	<!-- USER WITH NO AUTHENTICATION -->
+	<div sec:authorize="isAnonymous()">
+		<div th:replace="/role/noAuthorize :: div">
+		</div>
+	</div>
+  <br></br>
+  <h1>Lista książek do odbioru</h1>
+    	<div class="col-sm-9" >
+      		
+      		<div class="row">
+		      	<div class="col-lg-12 col-sm-12"> 
+					<div class="form-group">
+						<table id="table" class="table table-bordered table-hover">
+							<tr>
+								<th>E-mail</th>
+								<th>Imie</th>
+								<th>Nazwisko</th>
+								<th>Tytuł książki</th>
+								<th>Termin oddania wygasa</th>
+								<th>Kara do zapłaty</th>
+							</tr>
+							<tr th:each="book : ${books}">
+								<td th:text="${book.idBook}" style="display: none;"></td>
+								<td th:text="${book.email}">E-mail</td>
+								<td th:text="${book.firstName}">Firstname</td>
+								<td th:text="${book.lastName}">Lastname</td>
+								<td th:text="${book.title}">Title</td>
+								<td th:text="${book.date}">Date</td>
+								<td th:text="${book.moneyToPay + ' zł'}">Money to pay</td>
+							</tr>
+						</table>						
+						<!-- USER WITH SIGN IN WITH EMPLOYEE ROLE -->
+						<div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+							<button class="btn btn-warning akceptuj">Akceptuj</button>
+							<button class="btn btn-warning odrzuc">Odrzuć</button>
+						</div>
+						<!-- USER WITH SIGN IN WITH ADMIN ROLE -->
+						<div sec:authorize="hasRole('ROLE_ADMIN')">
+							<button class="btn btn-warning akceptuj">Akceptuj</button>
+							<button class="btn btn-warning odrzuc">Odrzuć</button>
+						</div>
+						
+						
+					</div>
+		      	</div>
+      	
+      		</div>
+
+    	</div>
+
+
+ </div>
+
+	<div th:replace="/footer :: div">
+	</div>
+
+    </div>
+
+<script type="text/javascript">
+
+	$("#table tr").click(function(){
+	   $(this).addClass('selected').siblings().removeClass('selected');    
+	   var value=$(this).find('td:first').html();
+	});
+
+	$('.odrzuc').on('click', function(e){
+	    var value = $("#table tr.selected td:first").html();
+	    var hostname = window.location.hostname;
+	    if( value == null){
+	    	alert("Nic nie wybrałeś");
+	    }else{
+	    	odrzuc(value, url());
+	    }
+	    
+	});
+	
+	$('.akceptuj').on('click', function(e){
+	    var value = $("#table tr.selected td:first").html();
+	    var hostname = window.location.hostname;
+	    if(value == null){
+	    	alert("Nic nie wybrałeś");
+	    }else{
+	    	akceptuj(value,url());
+	    }
+	});
+
+</script>
+
+</body>
+</html>

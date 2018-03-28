@@ -1,0 +1,22 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+  <meta charset="utf-8"></meta>
+  </head>
+<div id="menu" class="col-sm-3">
+		<br/>
+		<a th:href="@{/}" class="btn btn-block btn-success" role="button">Home</a>
+        <a th:href="@{/book/list}" class="btn btn-block btn-success" role="button">Lista ksiazek</a>
+        <a th:href="@{/author/list}" class="btn btn-block btn-success" role="button">Lista autorow</a>
+        <a th:href="@{/publisher/list}" class="btn btn-block btn-success" role="button">Lista wydawnictw</a>
+        <a th:href="@{/book/checkedBookOut}" class="btn btn-block btn-success" role="button">Wypożyczone książki</a>
+        <a th:href="@{/book/listBackBook}" class="btn btn-block btn-success" role="button">Odbierz książki</a>       
+			<form th:action="@{/logout}" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" ></input>
+				<button type="submit" class="btn btn-block btn-success" style="margin-top: 5px;" > 
+				 Wyloguj
+				</button>
+			</form>
+    	<br/>
+</div>
+</html>

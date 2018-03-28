@@ -1,0 +1,24 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+  <meta charset="utf-8"></meta>
+  </head>
+<div id="menu" class="col-sm-3">
+	<br/>
+		<a th:href="@{/}" class="btn btn-block btn-success" role="button">Home</a>
+		<a th:href="@{/book/search}" class="btn btn-block btn-success" role="button">Wyszukaj</a>
+        <a th:href="@{/book/list}" class="btn btn-block btn-success" role="button">Przeglądaj książki</a>
+		<a th:href="@{/contact}" class="btn btn-block btn-success" role="button">Kontakt</a>
+		<a th:href="@{/user/setting}" class="btn btn-block btn-success" role="button">Ustawienia konta</a>
+		<a th:href="@{/book/checkedBookOut}" class="btn btn-block btn-success" role="button">Wypożyczone książki</a>
+			<form id="theForm" th:action="@{/logout}" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" ></input>
+				<button type="submit" class="btn btn-block btn-success" style="margin-top: 5px;" > 
+				 Wyloguj
+				</button>
+				<!-- <a type="submit" class="btn btn-block btn-success" role="button" onclick="document.getElementById('theForm').submit();">Wypożyczone książki</a>
+				-->
+			</form>
+    <br/>
+</div>
+</html>

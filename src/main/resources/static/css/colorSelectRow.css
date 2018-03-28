@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+
+td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
+
+.selected {
+    background-color: orange;
+    color: #FFF;
+}
